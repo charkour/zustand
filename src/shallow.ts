@@ -3,16 +3,16 @@ export function shallow<T>(objA: T, objB: T) {
     return true
   }
   if (
-    typeof objA !== 'object' ||
-    objA === null ||
-    typeof objB !== 'object' ||
-    objB === null
+    typeof objA != 'object' ||
+    objA == null ||
+    typeof objB != 'object' ||
+    objB == null
   ) {
     return false
   }
 
   if (objA instanceof Map && objB instanceof Map) {
-    if (objA.size !== objB.size) return false
+    if (objA.size != objB.size) return false
 
     for (const [key, value] of objA) {
       if (!Object.is(value, objB.get(key))) {
@@ -23,7 +23,7 @@ export function shallow<T>(objA: T, objB: T) {
   }
 
   if (objA instanceof Set && objB instanceof Set) {
-    if (objA.size !== objB.size) return false
+    if (objA.size != objB.size) return false
 
     for (const value of objA) {
       if (!objB.has(value)) {
@@ -34,7 +34,7 @@ export function shallow<T>(objA: T, objB: T) {
   }
 
   const keysA = Object.keys(objA)
-  if (keysA.length !== Object.keys(objB).length) {
+  if (keysA.length != Object.keys(objB).length) {
     return false
   }
   for (let i = 0; i < keysA.length; i++) {
@@ -52,7 +52,7 @@ export function shallow<T>(objA: T, objB: T) {
  * @deprecated Use `import { shallow } from 'zustand/shallow'`
  */
 export default ((objA, objB) => {
-  if (import.meta.env?.MODE !== 'production') {
+  if (import.meta.env?.MODE != 'production') {
     console.warn(
       "[DEPRECATED] Default export is deprecated. Instead use `import { shallow } from 'zustand/shallow'`."
     )
