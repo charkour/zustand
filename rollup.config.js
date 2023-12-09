@@ -1,10 +1,11 @@
+// @ts-check
 const path = require('path')
-const alias = require('@rollup/plugin-alias')
-const babelPlugin = require('@rollup/plugin-babel')
-const resolve = require('@rollup/plugin-node-resolve')
-const replace = require('@rollup/plugin-replace')
-const terser = require('@rollup/plugin-terser')
-const typescript = require('@rollup/plugin-typescript')
+const { default: alias } = require('@rollup/plugin-alias')
+const { default: babelPlugin } = require('@rollup/plugin-babel')
+const { default: resolve } = require('@rollup/plugin-node-resolve')
+const { default: replace } = require('@rollup/plugin-replace')
+const { default: terser } = require('@rollup/plugin-terser')
+const { default: typescript } = require('@rollup/plugin-typescript')
 const { default: esbuild } = require('rollup-plugin-esbuild')
 const createBabelConfig = require('./babel.config.js')
 
@@ -21,6 +22,7 @@ function getBabelOptions(targets) {
     ...createBabelConfig({ env: (env) => env === 'build' }, targets),
     extensions,
     comments: false,
+    /** @type {import('@rollup/plugin-babel').RollupBabelInputPluginOptions['babelHelpers']} */
     babelHelpers: 'bundled',
   }
 }
@@ -67,7 +69,7 @@ function createESMConfig(input, output) {
               'import.meta.env?.MODE':
                 '(import.meta.env ? import.meta.env.MODE : undefined)',
             }),
-        // a workround for #829
+        // a workaround for #829
         'use-sync-external-store/shim/with-selector':
           'use-sync-external-store/shim/with-selector.js',
         delimiters: ['\\b', '\\b(?!(\\.|/))'],
